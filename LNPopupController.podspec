@@ -7,6 +7,6 @@ Pod::Spec.new do |s|
   s.authors = { 'Leo Natan' => 'http://www.linkedin.com/pub/leo-natan/3a/692/799' }
   s.source = { :git => 'https://github.com/LeoNatan/LNPopupController.git', :tag => 'v' + s.version.to_s }
   s.ios.deployment_target = '8.0'
-  s.source_files = "LNPopupController/*.swift", "LNPopupController/**/*.swift"
+  s.source_files = "LNPopupController/*.swift", "LNPopupController/**/*.swift", "LNPopupController/*.{h,m}", "LNPopupController/**/*.{h,m}"
   s.requires_arc = true
 end
