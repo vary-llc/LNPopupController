@@ -30,7 +30,11 @@ typedef NS_ENUM(NSUInteger, LNPopupBarStyle) {
 	/**
 	 * Prominent bar style
 	 */
-	LNPopupBarStyleProminent
+	LNPopupBarStyleProminent,
+    /**
+     * Somple bar style
+     */
+    LNPopupBarStyleSimple,
 };
 
 /**

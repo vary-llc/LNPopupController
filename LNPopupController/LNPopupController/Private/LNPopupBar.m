@@ -34,6 +34,7 @@
 
 const CGFloat LNPopupBarHeightCompact = 40.0;
 const CGFloat LNPopupBarHeightProminent = 64.0;
+const CGFloat LNPopupBarHeightSimple = 48.0;
 const CGFloat LNPopupBarProminentImageWidth = 48.0;
 
 const NSInteger LNBackgroundStyleInherit = -1;
@@ -61,7 +62,20 @@ const NSInteger LNBackgroundStyleInherit = -1;
 
 CGFloat _LNPopupBarHeightForBarStyle(LNPopupBarStyle style)
 {
-	return style == LNPopupBarStyleCompact ? LNPopupBarHeightCompact : LNPopupBarHeightProminent;
+    switch (style) {
+        case LNPopupBarStyleCompact:
+            return LNPopupBarHeightCompact;
+            break;
+        case LNPopupBarStyleProminent:
+            return LNPopupBarHeightProminent;
+            break;
+        case LNPopupBarStyleSimple:
+            return LNPopupBarHeightSimple;
+            break;
+        default:
+            return LNPopupBarHeightProminent;
+            break;
+    }
 }
 
 LNPopupBarStyle _LNPopupResolveBarStyleFromBarStyle(LNPopupBarStyle style)
@@ -69,7 +83,7 @@ LNPopupBarStyle _LNPopupResolveBarStyleFromBarStyle(LNPopupBarStyle style)
 	LNPopupBarStyle rv = style;
 	if(rv == LNPopupBarStyleDefault)
 	{
-		rv = [[NSProcessInfo processInfo] operatingSystemVersion].majorVersion > 9 ? LNPopupBarStyleProminent : LNPopupBarStyleCompact;
+		rv = [[NSProcessInfo processInfo] operatingSystemVersion].majorVersion > 9 ? LNPopupBarStyleSimple : LNPopupBarStyleCompact;
 	}
 	return rv;
 }
@@ -414,7 +428,7 @@ UIBlurEffectStyle _LNBlurEffectStyleForSystemBarStyle(UIBarStyle systemBarStyle,
 		 {
 			 UIView* itemView = [barButtonItem valueForKey:@"view"];
 			 
-			 if(_resolvedStyle == LNPopupBarStyleCompact)
+			 if(_resolvedStyle == LNPopupBarStyleCompact | LNPopupBarStyleSimple)
 			 {
 				 leftMargin = itemView.frame.origin.x + itemView.frame.size.width + 10;
 			 }
@@ -595,7 +609,7 @@ UIBlurEffectStyle _LNBlurEffectStyleForSystemBarStyle(UIBarStyle systemBarStyle,
 {
 	BOOL previouslyHidden = _imageView.hidden;
 	
-	if(_resolvedStyle == LNPopupBarStyleCompact)
+	if(_resolvedStyle == LNPopupBarStyleCompact | LNPopupBarStyleSimple)
 	{
 		_imageView.hidden = YES;
 		
@@ -658,8 +672,19 @@ UIBlurEffectStyle _LNBlurEffectStyleForSystemBarStyle(UIBarStyle systemBarStyle,
 	NSMutableArray* items = [NSMutableArray new];
 	
 	UIBarButtonItem* fixed = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:NULL];
-	fixed.width = _resolvedStyle == LNPopupBarStyleProminent ? 2 : -2;
-	[items addObject:fixed];
+    
+    switch (_resolvedStyle) {
+        case LNPopupBarStyleProminent:
+            fixed.width = 2;
+        case LNPopupBarStyleCompact:
+            fixed.width = -2;
+        case LNPopupBarStyleSimple:
+            fixed.width = -16;
+        default:
+            break;
+    }
+
+    [items addObject:fixed];
 	
 	CGFloat spacerWidth = 6;
 	if(self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular)
@@ -686,7 +711,7 @@ UIBlurEffectStyle _LNBlurEffectStyleForSystemBarStyle(UIBarStyle systemBarStyle,
 		}
 	}];
 	
-	if(resolvedStyle == LNPopupBarStyleCompact)
+	if(resolvedStyle == LNPopupBarStyleCompact | LNPopupBarStyleSimple)
 	{
 		[items addObject:spacer];
 	}
@@ -703,7 +728,18 @@ UIBlurEffectStyle _LNBlurEffectStyleForSystemBarStyle(UIBarStyle systemBarStyle,
 	}];
 	
 	fixed = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:NULL];
-	fixed.width = _resolvedStyle == LNPopupBarStyleProminent ? 2 : -2;
+    
+    switch (_resolvedStyle) {
+        case LNPopupBarStyleProminent:
+            fixed.width = 2;
+        case LNPopupBarStyleCompact:
+            fixed.width = -2;
+        case LNPopupBarStyleSimple:
+            fixed.width = -16;
+        default:
+            break;
+    }
+    
 	[items addObject:fixed];
 	
 	[_toolbar setItems:items animated:YES];
