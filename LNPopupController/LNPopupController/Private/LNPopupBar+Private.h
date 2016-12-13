@@ -39,6 +39,7 @@ extern LNPopupBarStyle _LNPopupResolveBarStyleFromBarStyle(LNPopupBarStyle style
 @property (nonatomic, weak) id<_LNPopupBarDelegate> _barDelegate;
 
 @property (nonatomic, copy) NSString* title;
+@property (nonatomic, copy) UIColor* topViewColor;
 @property (nonatomic, copy) NSString* subtitle;
 
 @property (nonatomic, strong) UIImage* image;

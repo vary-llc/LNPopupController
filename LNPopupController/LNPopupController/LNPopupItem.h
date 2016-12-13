@@ -53,6 +53,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nullable, nonatomic, copy) NSArray<UIBarButtonItem*>* rightBarButtonItems;
 
+@property(nullable, nonatomic, copy) UIColor* topViewColor;
+
 @end
 
 @interface LNPopupItem (Accessibility)

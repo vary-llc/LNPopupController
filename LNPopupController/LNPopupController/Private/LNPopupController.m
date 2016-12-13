@@ -191,7 +191,7 @@ LNPopupInteractionStyle _LNPopupResolveInteractionStyleFromInteractionStyle(LNPo
 	LNPopupInteractionStyle rv = style;
 	if(rv == LNPopupInteractionStyleDefault)
 	{
-		rv = [[NSProcessInfo processInfo] operatingSystemVersion].majorVersion > 9 ? LNPopupInteractionStyleSnap : LNPopupInteractionStyleDrag;
+		rv = LNPopupInteractionStyleDrag;
 	}
 	return rv;
 }
@@ -691,6 +691,11 @@ static CGFloat __smoothstep(CGFloat a, CGFloat b, CGFloat x)
 	[self closePopupAnimated:YES completion:nil];
 }
 
+- (void)_reconfigure_topViewColor
+{
+    _popupBar.topViewColor = _currentPopupItem.topViewColor;
+}
+
 - (void)_reconfigure_title
 {
 	_popupBar.title = _currentPopupItem.title;
@@ -803,7 +808,7 @@ static CGFloat __smoothstep(CGFloat a, CGFloat b, CGFloat x)
 		}
 	}
 	
-	NSArray<NSString*>* keys = @[@"title", @"subtitle", @"image", @"progress", @"leftBarButtonItems", @"accessibilityLavel", @"accessibilityHint", @"accessibilityImageLabel", @"accessibilityProgressLabel", @"accessibilityProgressValue"];
+	NSArray<NSString*>* keys = @[@"title", @"subtitle", @"image", @"progress", @"leftBarButtonItems", @"accessibilityLavel", @"accessibilityHint", @"accessibilityImageLabel", @"accessibilityProgressLabel", @"accessibilityProgressValue", @"topViewColor"];
 	[keys enumerateObjectsUsingBlock:^(NSString * __nonnull key, NSUInteger idx, BOOL * __nonnull stop) {
 		[self _popupItem:_currentPopupItem didChangeValueForKey:key];
 	}];

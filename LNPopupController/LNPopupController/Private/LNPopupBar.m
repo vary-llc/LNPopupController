@@ -58,6 +58,7 @@ const NSInteger LNBackgroundStyleInherit = -1;
 	UIImageView* _imageView;
 	
 	UIView* _shadowView;
+    UIView* _topView;
 }
 
 CGFloat _LNPopupBarHeightForBarStyle(LNPopupBarStyle style)
@@ -83,7 +84,7 @@ LNPopupBarStyle _LNPopupResolveBarStyleFromBarStyle(LNPopupBarStyle style)
 	LNPopupBarStyle rv = style;
 	if(rv == LNPopupBarStyleDefault)
 	{
-		rv = [[NSProcessInfo processInfo] operatingSystemVersion].majorVersion > 9 ? LNPopupBarStyleSimple : LNPopupBarStyleCompact;
+        rv = LNPopupBarStyleSimple;
 	}
 	return rv;
 }
@@ -174,8 +175,12 @@ UIBlurEffectStyle _LNBlurEffectStyleForSystemBarStyle(UIBarStyle systemBarStyle,
 		[self.toolbar addSubview:_imageView];
 		
 		_shadowView = [UIView new];
-		_shadowView.backgroundColor = [UIColor colorWithWhite:169.0 / 255.0 alpha:1.0];
+		_shadowView.backgroundColor = [UIColor whiteColor];
 		[self.toolbar addSubview:_shadowView];
+        
+        _topView = [UIView new];
+        _topView.backgroundColor = [UIColor clearColor];
+        [self.toolbar addSubview:_topView];
 		
 		_highlightView = [[UIView alloc] initWithFrame:self.bounds];
 		_highlightView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -208,9 +213,13 @@ UIBlurEffectStyle _LNBlurEffectStyleForSystemBarStyle(UIBarStyle systemBarStyle,
 	[_toolbar bringSubviewToFront:_imageView];
 	[_toolbar bringSubviewToFront:_titlesView];
 	[_toolbar bringSubviewToFront:_shadowView];
+    [_toolbar bringSubviewToFront:_topView];
 	
-	_shadowView.frame = CGRectMake(0, 0, self.toolbar.bounds.size.width, 1 / self.window.screen.scale);
-	_shadowView.hidden = _resolvedStyle == LNPopupBarStyleProminent;
+	_shadowView.frame = CGRectMake(0, 0, self.toolbar.bounds.size.width, -2.0);
+	_shadowView.hidden = _resolvedStyle == LNPopupBarStyleProminent | LNPopupBarStyleSimple;
+
+    _topView.frame = CGRectMake(0, 0, self.toolbar.bounds.size.width, 2.0);
+    _topView.hidden = _resolvedStyle == LNPopupBarStyleProminent;
 	
 	[self _layoutImageView];
 	[self _layoutTitles];
@@ -336,6 +345,10 @@ UIBlurEffectStyle _LNBlurEffectStyleForSystemBarStyle(UIBarStyle systemBarStyle,
 	{
 		_titleLabel.text = _title;
 	}
+}
+
+- (void)setTopViewColor:(UIColor *)color {
+    _topView.backgroundColor = color;
 }
 
 - (void)setSubtitle:(NSString *)subtitle
@@ -464,7 +477,7 @@ UIBlurEffectStyle _LNBlurEffectStyleForSystemBarStyle(UIBarStyle systemBarStyle,
 			}
 			
 			NSMutableParagraphStyle* paragraph = [NSMutableParagraphStyle new];
-			if(_resolvedStyle == LNPopupBarHeightCompact)
+			if(_resolvedStyle == LNPopupBarStyleCompact)
 			{
 				paragraph.alignment = NSTextAlignmentCenter;
 			}
