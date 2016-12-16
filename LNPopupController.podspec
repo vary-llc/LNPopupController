@@ -5,10 +5,10 @@ Pod::Spec.new do |s|
 
   s.summary      = 'framework for presenting view controllers'
   s.description  = 'LNPopupController is a framework for presenting view controllers as popups of other view controllers, much like the Apple Music and Podcasts apps.'
-  s.homepage     = 'https://github.com/pavelR/LNPopupController'
+  s.homepage     = 'https://github.com/LeoNatan/LNPopupController'
   s.license      = 'MIT'
   s.author             = { "pavelR" => "rastchynskipavel@gmail.com" }
-  s.source       = { :git => 'https://github.com/pavelR/LNPopupController.git', :commit => '60d47f0a8b43de6a8da486dc6fc00a8aeefe660c' }
+  s.source       = { :git => 'https://github.com/LeoNatan/LNPopupController.git', :commit => '60d47f0a8b43de6a8da486dc6fc00a8aeefe660c' }
   s.source_files  = 'LNPopupController/*.{h,m}', 'LNPopupController/**/*.{h,m}'
   s.requires_arc = true
   s.ios.deployment_target = '8.0'
