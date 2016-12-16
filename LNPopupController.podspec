@@ -8,10 +8,10 @@ Pod::Spec.new do |s|
   s.homepage     = 'https://github.com/pavelR/LNPopupController'
   s.license      = 'MIT'
   s.author             = { "pavelR" => "rastchynskipavel@gmail.com" }
-  s.source       = { :git => 'https://github.com/pavelR/LNPopupController.git', :tag => 'v' << s.version.to_s }
+  s.source       = { :git => 'https://github.com/pavelR/LNPopupController.git', :branch => 'master' }
   s.source_files  = 'LNPopupController/*.{h,m}', 'LNPopupController/**/*.{h,m}'
   s.requires_arc = true
   s.ios.deployment_target = '8.0'
   
-  s.dependency 'MarqueeLabel', '3.0.0'
+  s.dependency 'MarqueeLabel'
 end
