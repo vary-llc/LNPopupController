@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.homepage     = 'https://github.com/pavelR/LNPopupController'
   s.license      = 'MIT'
   s.author             = { "pavelR" => "rastchynskipavel@gmail.com" }
-  s.source       = { :git => 'https://github.com/pavelR/LNPopupController.git', :branch => 'master' }
+  s.source       = { :git => 'https://github.com/pavelR/LNPopupController.git', :commit => '60d47f0a8b43de6a8da486dc6fc00a8aeefe660c' }
   s.source_files  = 'LNPopupController/*.{h,m}', 'LNPopupController/**/*.{h,m}'
   s.requires_arc = true
   s.ios.deployment_target = '8.0'
